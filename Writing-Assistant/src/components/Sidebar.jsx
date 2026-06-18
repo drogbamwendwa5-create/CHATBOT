@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
   const [activeMode, setActiveMode] = useMode('chat');
   const navigate = useNavigate();
 
@@ -15,50 +15,58 @@ const Sidebar = () => {
   const handleModeSelect = (mode) => {
     setActiveMode(mode);
     navigate(`/mode/${mode}`);
+    if (onClose) onClose();
   };
 
   return (
-    <div className="sidebar" role="complementary" aria-label="Navigation sidebar">
-      <div className="sidebar-top">
-        <div className="sidebar-logo">AI</div>
-        <div className="sidebar-title">AI Assistant</div>
-      </div>
-      <div className="sidebar-content">
-        <div className="sidebar-group">
-          <div className="sidebar-group-title">Writing Modes</div>
-          <nav className="sidebar-nav" aria-label="Mode navigation">
-            {modes.map(mode => (
-              <button
-                key={mode.id}
-                className={`sidebar-btn ${activeMode === mode.id ? 'active' : ''}`}
-                onClick={() => handleModeSelect(mode.id)}
-                type="button"
-                aria-label={mode.label}
-              >
-                <span className="sidebar-btn-icon">{mode.icon}</span>
-                <span className="sidebar-btn-label">{mode.label}</span>
-                <span className="sidebar-btn-desc">{mode.description}</span>
-              </button>
-            ))}
-          </nav>
+    <>
+      {/* Overlay for mobile */}
+      <div className={`sidebar-overlay ${isOpen ? 'visible' : ''}`} onClick={onClose} />
+      <div className={`sidebar ${isOpen ? 'open' : ''}`} role="complementary" aria-label="Navigation sidebar">
+        <div className="sidebar-top">
+          <div className="sidebar-logo">AI</div>
+          <div className="sidebar-title">AI Assistant</div>
+          <button className="sidebar-close-btn icon-btn" onClick={onClose} aria-label="Close sidebar">
+            ✕
+          </button>
+        </div>
+        <div className="sidebar-content">
+          <div className="sidebar-group">
+            <div className="sidebar-group-title">Writing Modes</div>
+            <nav className="sidebar-nav" aria-label="Mode navigation">
+              {modes.map(mode => (
+                <button
+                  key={mode.id}
+                  className={`sidebar-btn ${activeMode === mode.id ? 'active' : ''}`}
+                  onClick={() => handleModeSelect(mode.id)}
+                  type="button"
+                  aria-label={mode.label}
+                >
+                  <span className="sidebar-btn-icon">{mode.icon}</span>
+                  <span className="sidebar-btn-label">{mode.label}</span>
+                  <span className="sidebar-btn-desc">{mode.description}</span>
+                </button>
+              ))}
+            </nav>
+          </div>
+        </div>
+        <div className="sidebar-footer">
+          <button
+            className="sidebar-footer-btn"
+            aria-label="Clear chat history"
+            onClick={() => {
+              if (window.confirm('Clear chat history?')) {
+                localStorage.removeItem('chatHistory');
+                window.location.reload();
+              }
+            }}
+          >
+            <span className="sidebar-footer-btn-icon">🗑️</span>
+            <span>Clear History</span>
+          </button>
         </div>
       </div>
-      <div className="sidebar-footer">
-        <button
-          className="sidebar-footer-btn"
-          aria-label="Clear chat history"
-          onClick={() => {
-            if (window.confirm('Clear chat history?')) {
-              localStorage.removeItem('chatHistory');
-              window.location.reload();
-            }
-          }}
-        >
-          <span className="sidebar-footer-btn-icon">🗑️</span>
-          <span>Clear History</span>
-        </button>
-      </div>
-    </div>
+    </>
   );
 };
 

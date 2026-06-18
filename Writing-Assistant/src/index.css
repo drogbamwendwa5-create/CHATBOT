@@ -190,7 +190,7 @@ button{
 }
 
 /* ==========================
-   HOME
+    HOME
 ========================== */
 
 .home{
@@ -201,6 +201,34 @@ button{
 
     flex:1;
 
+}
+
+/* Hamburger button (mobile only) */
+.hamburger-btn {
+    display: none;
+    margin-right: 8px;
+}
+
+/* Sidebar overlay (mobile only) */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Sidebar close button (mobile only) */
+.sidebar-close-btn {
+    display: none;
 }
 
 /* ==========================
@@ -1291,15 +1319,51 @@ button{
 
 @media(max-width:768px){
     .header{
-        padding:0 18px;
+        padding:0 12px;
     }
 
     .header-title{
         font-size:18px;
     }
 
-    .sidebar{
-        width:100%;
+    .header-subtitle{
+        font-size:11px;
+    }
+
+    .hamburger-btn {
+        display: flex;
+    }
+
+    .sidebar-overlay {
+        display: block;
+        pointer-events: none;
+    }
+
+    .sidebar-overlay.visible {
+        pointer-events: auto;
+    }
+
+    .sidebar-close-btn {
+        display: flex;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 300;
+        width: 300px;
+        height: 100vh;
+        height: 100dvh;
+        border-radius: 0;
+        border: none;
+        border-right: 1px solid var(--border);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
     }
 
     .templates-grid{
@@ -1307,26 +1371,66 @@ button{
     }
 
     .input-box{
-        padding:16px;
+        padding:14px;
+        gap:10px;
     }
 
-    .input-box textarea{
-        font-size:14px;
+    .input-box input {
+        font-size:16px; /* prevents iOS zoom on focus */
+        padding: 0.7rem;
     }
 
     .message-content{
-        max-width:100%;
+        max-width:95%;
         font-size:14px;
+        padding:14px 16px;
+    }
+
+    .message-list{
+        padding:16px;
+        gap:16px;
+    }
+
+    .chat-header{
+        padding:14px 18px;
+    }
+
+    .chat-title{
+        font-size:16px;
+    }
+
+    .chat-status span:not(.chat-status-dot){
+        display:none;
+    }
+
+    .content{
+        padding:10px;
+        gap:10px;
     }
 }
 
 @media(max-width:480px){
     .header{
-        height:65px;
+        height:60px;
+        padding:0 10px;
+    }
+
+    .header-title{
+        font-size:16px;
     }
 
     .header-subtitle{
         display:none;
+    }
+
+    .header-logo{
+        width:38px;
+        height:38px;
+        font-size:18px;
+    }
+
+    .sidebar{
+        width:85vw;
     }
 
     .dashboard{
@@ -1338,13 +1442,43 @@ button{
     }
 
     .send-btn{
-        width:52px;
-        height:52px;
+        width:48px;
+        height:48px;
+        font-size:14px;
+        border-radius:14px;
     }
 
     .theme-toggle{
-        width:48px;
-        height:48px;
+        width:44px;
+        height:44px;
+        font-size:1.2rem;
+    }
+
+    .icon-btn{
+        width:40px;
+        height:40px;
+        border-radius:12px;
+    }
+
+    .chatbox{
+        border-radius:18px;
+    }
+
+    .message{
+        gap:8px;
+    }
+
+    .toast-container{
+        top:10px;
+        right:10px;
+        left:10px;
+    }
+
+    .toast{
+        min-width:unset;
+        width:100%;
+        padding:14px 16px;
+        font-size:13px;
     }
 }
 
