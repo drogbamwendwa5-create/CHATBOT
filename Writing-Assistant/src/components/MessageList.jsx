@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 import { motion } from 'framer-motion'
+import { Bot, Copy } from 'lucide-react'
 
 /**
  * MessageList displays an array of message objects.
@@ -26,7 +27,9 @@ function MessageList({ messages }) {
     <div className="message-list">
       {messages && messages.length === 0 && (
         <div className="empty-state fade-in">
-          <i>🤖</i>
+          <div className="empty-state-icon">
+            <Bot size={64} />
+          </div>
           <h2 className="text-gradient">AI Writing Assistant</h2>
           <p>Start a conversation with your AI assistant. Choose a mode from the sidebar or simply type your message below.</p>
         </div>
@@ -40,7 +43,9 @@ function MessageList({ messages }) {
           transition={{ duration: 0.2 }}
         >
           {message.sender === 'bot' && (
-            <div className="avatar bot">AI</div>
+            <div className="avatar bot">
+              <Bot size={20} />
+            </div>
           )}
           <div className="message-content">
             {message.sender === 'bot' ? (
@@ -54,7 +59,8 @@ function MessageList({ messages }) {
               onClick={() => copyToClipboard(message.text)}
               aria-label="Copy message"
             >
-              📋 Copy
+              <Copy size={14} />
+              <span>Copy</span>
             </button>
           </div>
           {message.sender === 'user' && (

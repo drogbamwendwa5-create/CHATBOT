@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { MessageCircle, FileText, Mail, Code, Trash2 } from 'lucide-react';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const [activeMode, setActiveMode] = useMode('chat');
   const navigate = useNavigate();
 
   const modes = [
-    { id: 'chat', label: 'General Chat', icon: '💬', description: 'Free-form conversation' },
-    { id: 'blog', label: 'Blog Writer', icon: '📝', description: 'Structured blog posts' },
-    { id: 'email', label: 'Email Generator', icon: '📧', description: 'Professional emails' },
-    { id: 'code', label: 'Code Explainer', icon: '💻', description: 'Code analysis & docs' }
+    { id: 'chat', label: 'General Chat', icon: MessageCircle, description: 'Free-form conversation' },
+    { id: 'blog', label: 'Blog Writer', icon: FileText, description: 'Structured blog posts' },
+    { id: 'email', label: 'Email Generator', icon: Mail, description: 'Professional emails' },
+    { id: 'code', label: 'Code Explainer', icon: Code, description: 'Code analysis & docs' }
   ];
 
   const handleModeSelect = (mode) => {
@@ -34,19 +35,24 @@ const Sidebar = ({ isOpen, onClose }) => {
           <div className="sidebar-group">
             <div className="sidebar-group-title">Writing Modes</div>
             <nav className="sidebar-nav" aria-label="Mode navigation">
-              {modes.map(mode => (
-                <button
-                  key={mode.id}
-                  className={`sidebar-btn ${activeMode === mode.id ? 'active' : ''}`}
-                  onClick={() => handleModeSelect(mode.id)}
-                  type="button"
-                  aria-label={mode.label}
-                >
-                  <span className="sidebar-btn-icon">{mode.icon}</span>
-                  <span className="sidebar-btn-label">{mode.label}</span>
-                  <span className="sidebar-btn-desc">{mode.description}</span>
-                </button>
-              ))}
+              {modes.map(mode => {
+                const Icon = mode.icon;
+                return (
+                  <button
+                    key={mode.id}
+                    className={`sidebar-btn ${activeMode === mode.id ? 'active' : ''}`}
+                    onClick={() => handleModeSelect(mode.id)}
+                    type="button"
+                    aria-label={mode.label}
+                  >
+                    <span className="sidebar-btn-icon">
+                      <Icon size={22} />
+                    </span>
+                    <span className="sidebar-btn-label">{mode.label}</span>
+                    <span className="sidebar-btn-desc">{mode.description}</span>
+                  </button>
+                );
+              })}
             </nav>
           </div>
         </div>
@@ -61,7 +67,9 @@ const Sidebar = ({ isOpen, onClose }) => {
               }
             }}
           >
-            <span className="sidebar-footer-btn-icon">🗑️</span>
+            <span className="sidebar-footer-btn-icon">
+              <Trash2 size={18} />
+            </span>
             <span>Clear History</span>
           </button>
         </div>

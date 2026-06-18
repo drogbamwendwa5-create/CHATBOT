@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { MessageCircle, FileText, Mail, Code } from 'lucide-react'
 import MessageList from './MessageList'
 import InputBox from './InputBox'
 import Loading from './Loading'
@@ -55,17 +56,27 @@ function ChatBox({ mode = 'chat' }) {
     handleSend(templateLabel)
   }
 
+  const modeIcons = {
+    chat: <MessageCircle size={22} />,
+    blog: <FileText size={22} />,
+    email: <Mail size={22} />,
+    code: <Code size={22} />,
+  }
+
   const modeLabels = {
-    chat: '💬 General Chat',
-    blog: '📝 Blog Writer',
-    email: '📧 Email Generator',
-    code: '💻 Code Explainer'
+    chat: 'General Chat',
+    blog: 'Blog Writer',
+    email: 'Email Generator',
+    code: 'Code Explainer'
   }
 
   return (
     <div className="chatbox">
       <div className="chat-header">
-        <div className="chat-title">{modeLabels[mode] || modeLabels.chat}</div>
+        <div className="chat-title">
+          <span className="chat-mode-icon">{modeIcons[mode] || modeIcons.chat}</span>
+          <span>{modeLabels[mode] || modeLabels.chat}</span>
+        </div>
         <div className="chat-status">
           <span className="chat-status-dot"></span>
           <span>AI Online</span>

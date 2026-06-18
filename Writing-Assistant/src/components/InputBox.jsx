@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { SendHorizonal } from 'lucide-react'
 
 /**
  * InputBox renders a text input and calls onSend with the entered value.
@@ -38,7 +39,7 @@ function InputBox({ onSend }) {
         aria-label="Message input"
       />
       <button type="submit" className="send-btn" aria-label="Send message">
-        ➤
+        <SendHorizonal size={22} />
       </button>
     </form>
   )

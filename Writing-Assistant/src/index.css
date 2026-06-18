@@ -556,9 +556,14 @@ button{
 }
 
 .sidebar-btn-icon{
-    font-size:20px;
-    line-height:1;
+    display:flex;
+    align-items:center;
     margin-bottom:2px;
+    color:var(--primary);
+}
+
+.sidebar-btn.active .sidebar-btn-icon{
+    color:#fff;
 }
 
 .sidebar-btn-label{
@@ -667,6 +672,9 @@ button{
 }
 
 .chat-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
     font-size:20px;
     font-weight:700;
     color:var(--text);
@@ -1030,9 +1038,9 @@ button{
     box-shadow:var(--shadow-sm);
 }
 
-.template-button i{
-    font-size:24px;
+.template-button svg{
     color:var(--primary);
+    margin-bottom:4px;
 }
 
 .template-button:hover{
@@ -1042,7 +1050,7 @@ button{
     box-shadow:var(--shadow-lg);
 }
 
-.template-button:hover i{
+.template-button:hover svg{
     color:#fff;
 }
 
@@ -1809,10 +1817,12 @@ button{
     padding:60px 30px;
 }
 
-.empty-state i{
-    font-size:70px;
+.empty-state-icon{
     color:var(--primary);
     margin-bottom:25px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .empty-state h2{
