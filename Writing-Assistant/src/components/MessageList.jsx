@@ -1,27 +1,29 @@
-import ReactMarkdown from 'react-markdown';
-import { motion } from 'framer-motion';
+import ReactMarkdown from 'react-markdown'
+import { motion } from 'framer-motion'
 
 /**
  * MessageList displays an array of message objects.
  * Bot messages are rendered as markdown for rich formatting.
  * Each message fades in using Framer Motion and includes a copy‑to‑clipboard button.
+ *
+ * Scrolling is fully manual — the user scrolls freely through the entire chat.
  */
-function MessageList({ messages, bottomRef }) {
+function MessageList({ messages }) {
   const copyToClipboard = async (text) => {
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(text)
     } catch (err) {
-      console.error('Copy failed', err);
+      console.error('Copy failed', err)
     }
-  };
+  }
 
   const formatTime = () => {
-    const now = new Date();
-    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  };
+    const now = new Date()
+    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  }
 
   return (
-    <div className="message-list" role="log" aria-live="polite" aria-relevant="additions">
+    <div className="message-list">
       {messages && messages.length === 0 && (
         <div className="empty-state fade-in">
           <i>🤖</i>
@@ -60,10 +62,8 @@ function MessageList({ messages, bottomRef }) {
           )}
         </motion.div>
       ))}
-      {/* Dummy element to anchor scrolling to the bottom */}
-      <div ref={bottomRef} />
     </div>
-  );
+  )
 }
 
 export default MessageList

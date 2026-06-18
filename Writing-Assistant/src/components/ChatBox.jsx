@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import MessageList from './MessageList'
 import InputBox from './InputBox'
 import Loading from './Loading'
@@ -19,16 +19,9 @@ function ChatBox({ mode = 'chat' }) {
   })
   const [loading, setLoading] = useState(false)
 
-  // Ref to the bottom of the message list for auto‑scrolling
-  const bottomRef = useRef(null)
-
   // Save messages whenever they change
   useEffect(() => {
     saveToLocalStorage(storageKey, messages)
-    // Scroll to the newest message whenever the list changes
-    if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: 'smooth' })
-    }
   }, [messages, storageKey])
 
   const addMessage = (msg) => {
@@ -78,10 +71,9 @@ function ChatBox({ mode = 'chat' }) {
           <span>AI Online</span>
         </div>
       </div>
-      <MessageList messages={messages} bottomRef={bottomRef} />
+      <MessageList messages={messages} />
       {loading && <Loading />}
       {messages.length === 0 && <PromptTemplates onSelect={handleTemplateSelect} />}
-      {/* Scrolling is handled by the dummy element inside MessageList */}
       <InputBox onSend={handleSend} />
     </div>
   )

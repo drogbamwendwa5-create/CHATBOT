@@ -201,6 +201,8 @@ button{
 
     flex:1;
 
+    min-height:0;
+
 }
 
 /* Hamburger button (mobile only) */
@@ -236,13 +238,11 @@ button{
 ========================== */
 
 .content{
-    /* Main container holds sidebar and chatbox as separate panels */
     display:flex;
     flex:1;
+    min-height:0;
     padding:18px;
     gap:18px;
-    /* Constrain height to parent and hide overflow; scrolling is handled inside .chatbox */
-    height:100%;
     overflow:hidden;
 }
 
@@ -429,10 +429,6 @@ button{
     border-radius:24px;
     display:flex;
     flex-direction:column;
-    /* Keep sidebar fixed like ChatGPT */
-    position:sticky;
-    top:0;
-    height:calc(100vh - 36px); /* account for body padding */
     overflow-y:auto;
     box-shadow:var(--shadow-lg);
     transition:.35s;
@@ -645,12 +641,13 @@ button{
 
 .chatbox{
     flex:1;
+    min-height:0;
     display:flex;
     flex-direction:column;
     background:var(--surface);
     border:1px solid var(--border);
     border-radius:24px;
-    overflow:hidden; /* keep inner scrolling on .message-list */
+    overflow:hidden;
     box-shadow:var(--shadow-lg);
     position:relative;
 }
@@ -698,7 +695,36 @@ button{
     display:flex;
     flex-direction:column;
     gap:22px;
-    scroll-behavior:smooth;
+}
+
+/* Custom scrollbar for the chat message list */
+.message-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.message-list::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+.message-list::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary), var(--secondary));
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+    min-height: 40px;
+}
+
+.message-list::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--primary-hover), #0891b2);
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+/* Firefox scrollbar */
+.message-list {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
 }
 
 .message{
